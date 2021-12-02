@@ -71,7 +71,7 @@ publishing {
             pom {
                 name = 'grails-cascade-validation'
                 description = """This plugin establishes a 'cascade' constraint property for validateable objects. If "cascade:true" is set on a nested object, the nested object's validate() method will be invoked and the results will be reported as part of the parent object's validation."""
-                url = 'https://github.com/rmorrise/grails-cascade-validation'
+                url = 'https://github.com/gpc/grails-cascade-validation'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -107,9 +107,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/rmorrise/grails-cascade-validation.git'
-                    developerConnection = 'scm:git:ssh://github.com:rmorrise/grails-cascade-validation.git'
-                    url = 'https://github.com/rmorrise/grails-cascade-validation/tree/main'
+                    connection = 'scm:git:git://github.com/gpc/grails-cascade-validation.git'
+                    developerConnection = 'scm:git:ssh://github.com:gpc/grails-cascade-validation.git'
+                    url = 'https://github.com/gpc/grails-cascade-validation/tree/main'
                 }
             }
         }

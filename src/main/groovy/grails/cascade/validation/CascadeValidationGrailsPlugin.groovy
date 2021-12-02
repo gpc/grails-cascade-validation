@@ -24,15 +24,15 @@ Based on a blog post by Eric Kelm:
  http://asoftwareguy.com/2013/07/01/grails-cascade-validation-for-pogos/
 Used with permission.
 '''
-    def documentation = "https://github.com/rmorrise/grails-cascade-validation/wiki/How-to-use-cascade-validation"
+    def documentation = "https://github.com/gpc/grails-cascade-validation/wiki/How-to-use-cascade-validation"
     def license = "APACHE"
-    def organization = [name: "Corporation Service Company", url: "http://www.cscinfo.com/"]
-    def issueManagement = [system: 'GITHUB', url: 'https://github.com/rmorrise/grails-cascade-validation/issues']
-    def scm = [url: 'https://github.com/rmorrise/grails-cascade-validation']
+    def organization = [name: "Grails Plugin Collective", url: "https://www.github.com/gpc"]
+    def issueManagement = [system: 'GITHUB', url: 'https://github.com/gpc/grails-cascade-validation/issues']
+    def scm = [url: 'https://github.com/gpc/grails-cascade-validation']
 
     def developers = [
             [name: 'Russell Morrisey', github: 'https://github.com/rmorrise'],
-            [name: "Soeren Glasius", email: "soeren@glasius.dk", github: 'https://github.com/sbglasius'],
+            [name: "Søren Berg Glasius", email: "soeren@glasius.dk", github: 'https://github.com/sbglasius'],
             [name: 'Eric Kelm', github: 'https://github.com/asoftwareguy'],
             [name: 'Burt Beckwith', github: 'https://github.com/burtbeckwith'],
             [name: 'Christian Oestreich', github: 'https://github.com/ctoestreich'],

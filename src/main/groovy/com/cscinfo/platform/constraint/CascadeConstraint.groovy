@@ -1,5 +1,6 @@
 package com.cscinfo.platform.constraint
 
+import grails.validation.Validateable
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.AbstractConstraint
@@ -27,15 +28,14 @@ class CascadeConstraint extends AbstractConstraint {
     CascadeConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
 
-        if (!(constraintParameter instanceof Boolean)) {
-            throw new IllegalArgumentException("Parameter for constraint [$CASCADE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean")
-        }
-
         this.enabled = (boolean) constraintParameter
     }
 
     @Override
     protected Object validateParameter(Object constraintParameter) {
+        if (!(constraintParameter instanceof Boolean)) {
+            throw new IllegalArgumentException("Parameter for constraint [$CASCADE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean")
+        }
         return constraintParameter
     }
 

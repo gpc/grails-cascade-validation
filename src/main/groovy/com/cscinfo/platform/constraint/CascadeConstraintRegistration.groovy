@@ -26,7 +26,7 @@ class CascadeConstraintRegistration {
         evaluators.each { name, evaluator ->
             if (clazz.isAssignableFrom(evaluator.getClass())) {
                 ConstraintRegistry reg = closure.call(evaluator)
-                reg?.addConstraint(CascadeConstraint)
+                reg.addConstraint(CascadeConstraint)
             }
             log.debug("Registered CascadeConstraint on $name evaluator on $interfaceClass")
         }

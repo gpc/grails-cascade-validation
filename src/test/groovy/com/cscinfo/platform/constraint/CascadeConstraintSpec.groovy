@@ -187,4 +187,18 @@ class CascadeValidationConstraintSpec extends Specification {
         expect:
         constraint.supports(List)
     }
+
+    def "constraint cannot handle constraintParameter other than boolean"() {
+        when:
+        constraint = new CascadeConstraint(
+                ValidateableParent,
+                'property',
+                ['x'],
+                null
+        )
+
+        then:
+        thrown IllegalArgumentException
+    }
+
 }

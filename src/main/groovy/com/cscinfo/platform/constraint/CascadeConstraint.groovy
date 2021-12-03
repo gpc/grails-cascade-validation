@@ -1,5 +1,6 @@
 package com.cscinfo.platform.constraint
 
+import grails.validation.Validateable
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.AbstractConstraint
@@ -20,14 +21,22 @@ import org.springframework.validation.FieldError
  */
 @CompileStatic
 class CascadeConstraint extends AbstractConstraint {
+    boolean enabled = true
+
     static final String CASCADE_CONSTRAINT = "cascade"
 
     CascadeConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
 
+        this.enabled = (boolean) constraintParameter
+    }
+
+    @Override
+    protected Object validateParameter(Object constraintParameter) {
         if (!(constraintParameter instanceof Boolean)) {
             throw new IllegalArgumentException("Parameter for constraint [$CASCADE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean")
         }
+        return constraintParameter
     }
 
     boolean supports(Class type) {
@@ -39,12 +48,9 @@ class CascadeConstraint extends AbstractConstraint {
     }
 
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
-
-        boolean result = false
-
         if (propertyValue instanceof Collection) {
             propertyValue.eachWithIndex { item, pvIdx ->
-                validateValue(target, item, errors, pvIdx) || result
+                validateValue(target, item, errors, pvIdx)
             }
         } else {
             validateValue(target, propertyValue, errors)
@@ -62,11 +68,7 @@ class CascadeConstraint extends AbstractConstraint {
     @CompileDynamic
     private void validateValue(target, value, errors, index = null) {
         if (!value.respondsTo('validate')) {
-            throw new NoSuchMethodException("Error validating field [${constraintPropertyName}]. Unable to apply 'cascade' constraint on [${value.class}] because the object does not have a validate() method. If the object is a command object, you may need to add the @Validateable annotation to the class definition.")
-        }
-
-        if (!getParameter()) {
-            return
+            throw new NoSuchMethodException("Error validating field [${constraintPropertyName}]. Unable to apply 'cascade' constraint on [${value.class}] because the object does not have a validate() method. If the object is a command object, you may need to implement grails.validation.Validateable on the class definition.")
         }
 
         if (value.validate()) {
@@ -91,14 +93,4 @@ class CascadeConstraint extends AbstractConstraint {
         }
     }
 
-    @Override
-    protected Object validateParameter(Object constraintParameter) {
-        if (!(constraintParameter instanceof Boolean)) {
-            throw new IllegalArgumentException("Parameter for constraint [" +
-                    CASCADE_CONSTRAINT + "] of property [" +
-                    constraintPropertyName + "] of class [" + constraintOwningClass +
-                    "] must be a boolean value")
-        }
-        return constraintParameter
-    }
 }

@@ -1,3 +1,5 @@
+[![Build](https://github.com/gpc/grails-cascade-validation/actions/workflows/build.yml/badge.svg)](https://github.com/gpc/grails-cascade-validation/actions/workflows/build.yml)
+
 grails-cascade-validation
 =========================
 

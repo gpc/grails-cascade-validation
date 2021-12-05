@@ -65,7 +65,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = project.group
-            artifactId = 'grails-cascade-validation'
+            artifactId = 'cascade-validation'
             version = project.version
 
             from components.java
@@ -73,7 +73,7 @@ publishing {
             artifact javadocJar
 
             pom {
-                name = 'grails-cascade-validation'
+                name = 'cascade-validation'
                 description = """This plugin establishes a 'cascade' constraint property for validateable objects. If "cascade:true" is set on a nested object, the nested object's validate() method will be invoked and the results will be reported as part of the parent object's validation."""
                 url = 'https://github.com/gpc/grails-cascade-validation'
                 licenses {

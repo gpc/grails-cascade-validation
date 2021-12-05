@@ -10,7 +10,7 @@ To use this plugin, add the plugin to `build.gradle`:
 ```groovy 
 dependencies {
      //CSC custom plugin for 'cascade' constraint
-     compile "io.github.gpc:cascade-validation:4.0.0"
+     compile "io.github.gpc:grails-cascade-validation:4.0.0"
 }
 ```
 

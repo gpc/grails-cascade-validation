@@ -54,15 +54,38 @@ When running a unit test, the cascade constraint isn't registered with Grails. T
 `org.grails.testing.GrailsUnitTest` and the following code must be added to the `setup()` method of the test:
 
 ```groovy
-@Override
-Closure doWithSpring() {
-   return {
-       constraintEvaluator(DefaultConstraintEvaluator)
-   }
+import com.cscinfo.platform.constraint.CascadeConstraintRegistration
+import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
+import org.grails.testing.GrailsUnitTest
+import spock.lang.Specification
+
+class ParentSpec extends Specification implements GrailsUnitTest {
+
+    @Override
+    Closure doWithSpring() {
+        return {
+            constraintEvaluator(DefaultConstraintEvaluator)
+        }
+    }
+
+    void setup() {
+        CascadeConstraintRegistration.register(applicationContext)
+    }
+
+    void 'validate cascade'() {
+        given:
+        def phone = new PhoneNumber(telephoneType: new PhoneNumber.TelephoneType())
+
+        when:
+        parent.validate(['telephoneType'])
+
+        then:
+        parent.hasErrors()
+
+        parent.errors.getFieldError('telephoneType.id').code == 'nullable'
+        parent.errors.getFieldError('telephoneType.countryCodeRecommended').code == 'nullable'
+    }
 }
 
-def setup() {
-   CascadeConstraintRegistration.register(applicationContext)
-}
 ```
 This will register the `CascadeConstraint` the same way as the plugin does at runtime.

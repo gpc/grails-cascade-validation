@@ -17,8 +17,7 @@ dependencies {
 Here is an example of a command object that uses the plugin:
 
 ```groovy
- @Validateable
- class PhoneNumber {
+ class PhoneNumber implements Validateable {
      long id
      String countryCode
      String areaCode
@@ -33,8 +32,7 @@ Here is an example of a command object that uses the plugin:
          telephoneType(cascade: true)
      }
 
-     @Validateable
-     static class TelephoneType {
+     static class TelephoneType implements Validateable {
          String id
          boolean countryCodeRecommended
 
@@ -56,6 +54,13 @@ When running a unit test, the cascade constraint isn't registered with Grails. T
 `org.grails.testing.GrailsUnitTest` and the following code must be added to the `setup()` method of the test:
 
 ```groovy
+@Override
+Closure doWithSpring() {
+   return {
+       constraintEvaluator(DefaultConstraintEvaluator)
+   }
+}
+
 def setup() {
    CascadeConstraintRegistration.register(applicationContext)
 }

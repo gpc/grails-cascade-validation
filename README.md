@@ -77,10 +77,10 @@ class ParentSpec extends Specification implements GrailsUnitTest {
         def phone = new PhoneNumber(telephoneType: new PhoneNumber.TelephoneType())
 
         when:
-        parent.validate(['telephoneType'])
+        phone.validate(['telephoneType'])
 
         then:
-        parent.hasErrors()
+        phone.hasErrors()
 
         parent.errors.getFieldError('telephoneType.id').code == 'nullable'
         parent.errors.getFieldError('telephoneType.countryCodeRecommended').code == 'nullable'

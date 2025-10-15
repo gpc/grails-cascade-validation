@@ -13,3 +13,6 @@ plugin.xml
 *.iws
 *.iml
 *.gpg
+
+/buildSrc/.*
+/buildSrc/build

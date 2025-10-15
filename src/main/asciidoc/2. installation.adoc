@@ -1,0 +1,20 @@
+= Installation
+
+ifndef::revnumber[:revnumber: x.x.x]
+
+The plugin is published to Maven Central.
+Add the dependency to your Build configuration.
+
+[source,groovy,subs=attributes+]
+.build.gradle
+----
+dependencies {
+    implementation "org.gpc:grails-cascade-validation:{revnumber}"
+}
+----
+
+== Compatibility
+
+- Requires Grails 7.
+- For earlier versions of grails, see version 4.0.x
+

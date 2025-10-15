@@ -1,0 +1,13 @@
+= Cascade Validation Plugin
+:doctype: book
+:toc: left
+:icons: font
+ifndef::revnumber[:revnumber: x.x.x]
+ifndef::src[:src: ../../../]
+ifndef::example[:example: {src}/cascade-validation-example]
+:sectnums:
+:source-highlighter: rouge
+
+include::1. introduction.adoc[leveloffset=2]
+include::2. installation.adoc[leveloffset=2]
+include::3. usage.adoc[leveloffset=2]

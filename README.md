@@ -5,12 +5,17 @@ grails-cascade-validation
 
 This plugin establishes a `cascade` constraint property for validateable objects, that being domain objects, and objects implementing `grails.validation.Validateable`. If `cascade:true` is set on a nested object, the nested object's `validate()`  method will be invoked and the results will be reported as part of the parent object's validation.
 
+This plugin is for Grails 7.0.0
+
+### **BREAKING CHANGE**
+
+The `cascade` constraint in `constraints` was renamed to `cascaded` because of a name clash with Hibernate cascading.
+
 To use this plugin, add the plugin to `build.gradle`:
 
 ```groovy 
 dependencies {
-     //CSC custom plugin for 'cascade' constraint
-     compile "io.github.gpc:cascade-validation:4.0.0"
+     implementation "io.github.gpc:cascade-validation:7.0.0"
 }
 ```
 
@@ -29,7 +34,7 @@ Here is an example of a command object that uses the plugin:
      static constraints = {
          areaCode(nullable: false)
          number(nullable: false)
-         telephoneType(cascade: true)
+         telephoneType(cascaded: true)
      }
 
      static class TelephoneType implements Validateable {
@@ -89,3 +94,5 @@ class ParentSpec extends Specification implements GrailsUnitTest {
 
 ```
 This will register the `CascadeConstraint` the same way as the plugin does at runtime.
+
+See the full documentation here: https://gpc.github.io/cascade-validation/latest

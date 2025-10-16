@@ -95,4 +95,4 @@ class ParentSpec extends Specification implements GrailsUnitTest {
 ```
 This will register the `CascadeConstraint` the same way as the plugin does at runtime.
 
-See the full documentation here: https://gpc.github.io/cascade-validation/latest
+See the full documentation here: https://gpc.github.io/grails-cascade-validation/snapshot/

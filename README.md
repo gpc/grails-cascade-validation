@@ -59,14 +59,13 @@ When running a unit test, the cascade constraint isn't registered with Grails. T
 `org.grails.testing.GrailsUnitTest` and the following code must be added to the `setup()` method of the test:
 
 ```groovy
-import com.cscinfo.platform.constraint.CascadeConstraintRegistration
+import grails.cascade.validation.internal.CascadeConstraintRegistration
 import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
 import org.grails.testing.GrailsUnitTest
 import spock.lang.Specification
 
 class ParentSpec extends Specification implements GrailsUnitTest {
 
-    @Override
     Closure doWithSpring() {
         return {
             constraintEvaluator(DefaultConstraintEvaluator)
@@ -74,6 +73,7 @@ class ParentSpec extends Specification implements GrailsUnitTest {
     }
 
     void setup() {
+        // Important for Unit-tests as the registrations only happens when Grails context is started.
         CascadeConstraintRegistration.register(applicationContext)
     }
 

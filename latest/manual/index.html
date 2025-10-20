@@ -443,7 +443,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Cascade Validation Plugin</h1>
 <div class="details">
-<span id="revnumber">version 7.0.0-RC1</span>
+<span id="revnumber">version 7.0.0-RC2</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -481,7 +481,7 @@ Add the dependency to your Build configuration.</p>
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">dependencies {
-    implementation "org.gpc:grails-cascade-validation:7.0.0-RC1"
+    implementation "org.gpc:grails-cascade-validation:7.0.0-RC2"
 }</code></pre>
 </div>
 </div>
@@ -501,12 +501,34 @@ Add the dependency to your Build configuration.</p>
 </div>
 <div class="sect2">
 <h3 id="usage">3. Usage</h3>
+<div class="sect3">
+<h4 id="general-usage">3.1. General usage</h4>
 <div class="paragraph">
-<p>This section demonstrates how to apply the plugin&#8217;s constraint in domain classes and how to invoke validation from services and tests.
-The example code below is representative — replace the placeholders with the code from the example project in this repository if you want verbatim examples.</p>
+<p>The constraint can be applied in two ways, either as <code>cascaded: true</code> or as a <code>Closure&lt;Boolean&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="groovy">class Person {
+    Address address
+    List&lt;Phone&gt; phones
+    boolean shouldValidatePhones
+    static constraints = {
+      // Will enable cascade for the Address property
+      address cascaded: true
+      // Will enable cascade for all phone numbers if `shouldValidatePhones` is true
+      phones cascaded: { property, target -&gt;
+        target.shouldValidatePhones
+      }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another example can be found in <code>ValidateableParent</code> below.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="domain-example">3.1. Domain example</h4>
+<h4 id="domain-example">3.2. Domain example</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">class Person {
@@ -573,7 +595,7 @@ When each <code>PhoneNumber</code> are validated, <code>cascaded</code> is also 
 </div>
 </div>
 <div class="sect3">
-<h4 id="service-usage">3.2. Service usage</h4>
+<h4 id="service-usage">3.3. Service usage</h4>
 <div class="paragraph">
 <p>In a Data service, you can save, and validation is automatically applied</p>
 </div>
@@ -625,7 +647,7 @@ class PersonDataServiceSpec extends Specification {
 </div>
 </div>
 <div class="sect3">
-<h4 id="databinding-usage">3.3. Databinding usage</h4>
+<h4 id="databinding-usage">3.4. Databinding usage</h4>
 <div class="paragraph">
 <p>When binding data to  <code>grails.validation.Validateable</code> objects (e.g., via controllers or REST endpoints), call <code>validate()</code> or rely on automatic validation in data-binding flows, the <code>CascadeConstraint</code> ensures marked associations are validated as part of the root object validation.</p>
 </div>
@@ -641,9 +663,13 @@ class PersonDataServiceSpec extends Specification {
 class ValidateableParent implements Validateable {
 
     ValidateableProperty property
-
+    ValidateableProperty anotherProperty
+    
+    boolean shouldCascade() { true }
+    
     static constraints = {
         property cascaded: true
+        anotherProperty cascade: { value, object -&gt; object.shouldCascade() }
     }
 }</code></pre>
 </div>
@@ -715,8 +741,8 @@ To do so add</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 7.0.0-RC1<br>
-Last updated 2025-10-16 15:22:34 UTC
+Version 7.0.0-RC2<br>
+Last updated 2025-10-20 09:51:33 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

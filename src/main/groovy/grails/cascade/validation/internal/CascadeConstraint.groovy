@@ -21,20 +21,22 @@ import org.springframework.validation.FieldError
  */
 @CompileStatic
 class CascadeConstraint extends AbstractConstraint {
-    boolean enabled = true
 
     static final String CASCADE_CONSTRAINT = "cascaded"
+    private final Closure<Boolean> enabledEvaluator
 
     CascadeConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
-
-        this.enabled = (boolean) constraintParameter
+        this.enabledEvaluator = constraintParameter instanceof Closure ? (constraintParameter as Closure<Boolean>) : { (constraintParameter as boolean) }
+        if(this.enabledEvaluator.maximumNumberOfParameters > 2) {
+            throw new IllegalArgumentException("Too many arguments on closure, expects one or two")
+        }
     }
 
     @Override
     protected Object validateParameter(Object constraintParameter) {
-        if (!(constraintParameter instanceof Boolean)) {
-            throw new IllegalArgumentException("Parameter for constraint [$CASCADE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean")
+        if (!(constraintParameter instanceof Boolean || constraintParameter instanceof Closure)) {
+            throw new IllegalArgumentException("Parameter for constraint [$CASCADE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean or a closure returning a boolean")
         }
         return constraintParameter
     }
@@ -48,6 +50,10 @@ class CascadeConstraint extends AbstractConstraint {
     }
 
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
+        if (!isEnabled(target, propertyValue)) {
+            return
+        }
+
         if (propertyValue instanceof Collection) {
             propertyValue.eachWithIndex { item, pvIdx ->
                 validateValue(target, item, errors, pvIdx)
@@ -56,6 +62,7 @@ class CascadeConstraint extends AbstractConstraint {
             validateValue(target, propertyValue, errors)
         }
     }
+
 
     /**
      * Processes the validation of the propertyValue, against the checks patterns set, and setting and calling rejectValue
@@ -90,6 +97,14 @@ class CascadeConstraint extends AbstractConstraint {
 
             FieldError fieldError = new FieldError(objectName, field, childFieldError.rejectedValue, childFieldError.bindingFailure, childFieldError.codes, childFieldError.arguments, childFieldError.defaultMessage)
             errors.addError(fieldError)
+        }
+    }
+
+    private boolean isEnabled(Object target, Object propertyValue) {
+        switch(enabledEvaluator.maximumNumberOfParameters) {
+            case 1: return enabledEvaluator.call(propertyValue)
+            case 2: return enabledEvaluator.call(propertyValue, target)
+            default: throw new IllegalArgumentException("Too many arguments on closure, expects one or two")
         }
     }
 

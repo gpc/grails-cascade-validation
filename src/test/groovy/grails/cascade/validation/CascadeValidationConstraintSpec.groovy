@@ -13,9 +13,10 @@ import spock.lang.Specification
  * @author Eric Kelm
  */
 class CascadeValidationConstraintSpec extends Specification {
+
     CascadeConstraint constraint
     ValidateableParent parent
-    ValidationErrors errors
+    ValidationErrors errors = Mock()
 
     def setup() {
         parent = Mock(ValidateableParent)
@@ -23,7 +24,7 @@ class CascadeValidationConstraintSpec extends Specification {
         parent.errors >> errors
     }
 
-    def "constraint name should be cascade"() {
+    void "constraint name should be cascade"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -36,7 +37,7 @@ class CascadeValidationConstraintSpec extends Specification {
         constraint.name == 'cascaded'
     }
 
-    def "validateWithVetoing fails when constraint is set on non-validatable type"() {
+    void "validateWithVetoing fails when constraint is set on non-validatable type"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -54,7 +55,7 @@ class CascadeValidationConstraintSpec extends Specification {
         thrown(NoSuchMethodException)
     }
 
-    def "validateWithVetoing returns valid when constraint is set to validateable type and constraints pass"() {
+    void "validateWithVetoing returns valid when constraint is set to validateable type and constraints pass"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -73,7 +74,7 @@ class CascadeValidationConstraintSpec extends Specification {
         0 * errors.addError(_)
     }
 
-    def "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail"() {
+    void "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -113,7 +114,7 @@ class CascadeValidationConstraintSpec extends Specification {
         })
     }
 
-    def "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail on list"() {
+    void "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail on list"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -151,7 +152,38 @@ class CascadeValidationConstraintSpec extends Specification {
         2 * errors.addError(_)
     }
 
-    def "constraint does not support non-validateable types"() {
+    void "constraint only validates if enabled evaluates to true"() {
+        given:
+        constraint = new CascadeConstraint(
+                ValidateableParent,
+                'anotherProperty',
+                truth,
+                null
+        )
+        parent.shouldCascade() >> shouldCascade
+
+        and:
+        def target = Mock(ValidateableProperty)
+
+        when:
+        constraint.validate(parent, target, errors)
+
+        then:
+        callsToValidate * target.validate() >> true
+
+        where:
+        _ | truth                                 | shouldCascade || callsToValidate
+        _ | true                                  | _             || 1
+        _ | false                                 | _             || 0
+        _ | { true }                              | _             || 1
+        _ | { false }                             | _             || 0
+        _ | { val -> true }                       | _             || 1
+        _ | { val -> false }                      | _             || 0
+        _ | { value, obj -> obj.shouldCascade() } | true          || 1
+        _ | { value, obj -> obj.shouldCascade() } | false         || 0
+    }
+
+    void "constraint does not support non-validateable types"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -164,7 +196,7 @@ class CascadeValidationConstraintSpec extends Specification {
         !constraint.supports(String)
     }
 
-    def "constraint supports validateable types"() {
+    void "constraint supports validateable types"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -177,7 +209,7 @@ class CascadeValidationConstraintSpec extends Specification {
         constraint.supports(ValidateableProperty)
     }
 
-    def "constraint supports collection types"() {
+    void "constraint supports collection types"() {
         given:
         constraint = new CascadeConstraint(
                 ValidateableParent,
@@ -190,7 +222,37 @@ class CascadeValidationConstraintSpec extends Specification {
         constraint.supports(List)
     }
 
-    def "constraint cannot handle constraintParameter other than boolean"() {
+    void "constraint can handle constraintParameter when is a closure with one or two params"() {
+        when:
+        constraint = new CascadeConstraint(
+                ValidateableParent,
+                'property',
+                closure,
+                null
+        )
+
+        then:
+        notThrown IllegalArgumentException
+
+        where:
+        closure << [{ return true }, { a -> return true }, { a, b -> return true }]
+    }
+
+    void "constraint cannot handle constraintParameter when is a closure more than two parameters"() {
+        when:
+        constraint = new CascadeConstraint(
+                ValidateableParent,
+                'property',
+                { a, b, c -> true },
+                null
+        )
+
+        then:
+        def e = thrown IllegalArgumentException
+        e.message == 'Too many arguments on closure, expects one or two'
+    }
+
+    void "constraint cannot handle constraintParameter other than boolean"() {
         when:
         constraint = new CascadeConstraint(
                 ValidateableParent,

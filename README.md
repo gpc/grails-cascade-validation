@@ -20,6 +20,18 @@ dependencies {
 ```
 
 Here is an example of a command object that uses the plugin:
+```groovy
+class Person implements Validateable {
+    String firstName
+    String lastName
+    List<PhoneNumber> phones
+    
+    static constraints = {
+        phones cascaded: { value -> value.isPrimary } // Only validate the phonenumber if the value is a primary number
+    }
+}
+```
+
 
 ```groovy
  class PhoneNumber implements Validateable {

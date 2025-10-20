@@ -3,8 +3,29 @@
 ifndef::src[:src: ../../../]
 ifndef::example[:example: {src}/cascade-validation-example]
 
-This section demonstrates how to apply the plugin's constraint in domain classes and how to invoke validation from services and tests.
-The example code below is representative — replace the placeholders with the code from the example project in this repository if you want verbatim examples.
+== General usage
+
+The constraint can be applied in two ways, either as `cascaded: true` or as a `Closure<Boolean>`:
+
+[source,groovy]
+----
+class Person {
+    Address address
+    List<Phone> phones
+    boolean shouldValidatePhones
+    static constraints = { 
+      // Will enable cascade for the Address property
+      address cascaded: true 
+      // Will enable cascade for all phone numbers if `shouldValidatePhones` is true
+      phones cascaded: { property, target -> 
+        target.shouldValidatePhones 
+      }
+    }
+}
+----
+
+
+Another example can be found in `ValidateableParent` below.
 
 == Domain example
 

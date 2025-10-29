@@ -1,7 +1,7 @@
 package grails.cascade.validation
 
-import grails.cascade.validation.internal.CascadeConstraint
-import grails.cascade.validation.internal.CascadeConstraintRegistration
+import grails.cascade.validation.internal.CascadedConstraint
+import grails.cascade.validation.internal.CascadedConstraintRegistration
 import org.grails.datastore.gorm.validation.constraints.eval.ConstraintsEvaluator
 import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
 import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry
@@ -13,7 +13,7 @@ import org.grails.spring.beans.factory.InstanceFactoryBean
 import org.grails.testing.GrailsUnitTest
 import spock.lang.Specification
 
-class CascadeConstraintRegistrationSpec extends Specification implements GrailsUnitTest {
+class CascadedConstraintRegistrationSpec extends Specification implements GrailsUnitTest {
 
     DefaultConstraintRegistry anotherConstraintRegistry = Mock()
     DefaultConstraintEvaluator defaultConstraintEvaluator = Spy(new DefaultConstraintEvaluator(anotherConstraintRegistry, Stub(MappingContext), Collections.emptyMap()))
@@ -29,16 +29,16 @@ class CascadeConstraintRegistrationSpec extends Specification implements GrailsU
         }
 
         when:
-        CascadeConstraintRegistration.register(applicationContext)
+        CascadedConstraintRegistration.register(applicationContext)
 
         then: 'cascading is added to DefaultConstraintEvaluator'
-        1 * anotherConstraintRegistry.addConstraint(CascadeConstraint)
+        1 * anotherConstraintRegistry.addConstraint(CascadedConstraint)
 
         and: 'cascading is added to DefaultValidatorRegistry'
-        1 * defaultValidatorRegistry.addConstraint(CascadeConstraint)
+        1 * defaultValidatorRegistry.addConstraint(CascadedConstraint)
 
         and: 'cascading is added to DefaultConstraintRegistry'
-        1 * defaultConstraintRegistry.addConstraint(CascadeConstraint)
+        1 * defaultConstraintRegistry.addConstraint(CascadedConstraint)
     }
 
     def "register with missing beans"() {
@@ -47,15 +47,15 @@ class CascadeConstraintRegistrationSpec extends Specification implements GrailsU
         }
 
         when:
-        CascadeConstraintRegistration.register(applicationContext)
+        CascadedConstraintRegistration.register(applicationContext)
 
         then: 'cascading is not added to DefaultConstraintEvaluator'
-        0 * anotherConstraintRegistry.addConstraint(CascadeConstraint)
+        0 * anotherConstraintRegistry.addConstraint(CascadedConstraint)
 
         and: 'cascading is not added to DefaultValidatorRegistry'
-        0 * defaultValidatorRegistry.addConstraint(CascadeConstraint)
+        0 * defaultValidatorRegistry.addConstraint(CascadedConstraint)
 
         and: 'cascading is not added to DefaultConstraintRegistry'
-        0 * defaultConstraintRegistry.addConstraint(CascadeConstraint)
+        0 * defaultConstraintRegistry.addConstraint(CascadedConstraint)
     }
 }

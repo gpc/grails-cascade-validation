@@ -9,8 +9,9 @@ import org.grails.datastore.mapping.validation.ValidatorRegistry
 import org.springframework.context.ApplicationContext
 
 @Slf4j
-class CascadeConstraintRegistration {
+class CascadedConstraintRegistration {
     static void register(ApplicationContext applicationContext) {
+        
         registerCascadeConstraintOnBeans(applicationContext, ConstraintsEvaluator, DefaultConstraintEvaluator) {
             it.constraintRegistry
         }
@@ -26,7 +27,7 @@ class CascadeConstraintRegistration {
         evaluators.each { name, evaluator ->
             if (clazz.isAssignableFrom(evaluator.getClass())) {
                 ConstraintRegistry reg = closure.call(evaluator)
-                reg.addConstraint(CascadeConstraint)
+                reg.addConstraint(CascadedConstraint)
             }
             log.debug("Registered CascadeConstraint on $name evaluator on $interfaceClass")
         }

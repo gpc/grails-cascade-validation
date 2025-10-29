@@ -1,7 +1,7 @@
 package grails.cascade.validation
 
 
-import grails.cascade.validation.internal.CascadeConstraintRegistration
+import grails.cascade.validation.internal.CascadedConstraintRegistration
 import grails.plugins.Plugin
 
 class CascadeValidationGrailsPlugin extends Plugin {
@@ -38,7 +38,7 @@ Used with permission.
 
 
     void doWithApplicationContext() {
-        CascadeConstraintRegistration.register(applicationContext)
+        CascadedConstraintRegistration.register(applicationContext)
     }
 
 }

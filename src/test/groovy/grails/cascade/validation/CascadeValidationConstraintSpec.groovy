@@ -1,9 +1,10 @@
 package grails.cascade.validation
 
-import grails.cascade.validation.internal.CascadeConstraint
+import grails.cascade.validation.internal.CascadedConstraint
 import grails.cascade.validation.support.ValidateableParent
 import grails.cascade.validation.support.ValidateableProperty
 import grails.validation.ValidationErrors
+import org.grails.testing.GrailsUnitTest
 import org.springframework.validation.Errors
 import org.springframework.validation.FieldError
 import spock.lang.Specification
@@ -12,9 +13,9 @@ import spock.lang.Specification
  * @author: rmorrise
  * @author Eric Kelm
  */
-class CascadeValidationConstraintSpec extends Specification {
+class CascadeValidationConstraintSpec extends Specification implements GrailsUnitTest {
 
-    CascadeConstraint constraint
+    CascadedConstraint constraint
     ValidateableParent parent
     ValidationErrors errors = Mock()
 
@@ -26,7 +27,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint name should be cascade"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -39,7 +40,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "validateWithVetoing fails when constraint is set on non-validatable type"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -57,7 +58,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "validateWithVetoing returns valid when constraint is set to validateable type and constraints pass"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -76,7 +77,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -116,7 +117,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "validateWithVetoing returns invalid when constraint is set to validateable type and constraints fail on list"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -154,7 +155,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint only validates if enabled evaluates to true"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'anotherProperty',
                 truth,
@@ -185,7 +186,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint does not support non-validateable types"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -198,7 +199,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint supports validateable types"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -211,7 +212,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint supports collection types"() {
         given:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 true,
@@ -224,7 +225,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint can handle constraintParameter when is a closure with one or two params"() {
         when:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 closure,
@@ -240,7 +241,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint cannot handle constraintParameter when is a closure more than two parameters"() {
         when:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 { a, b, c -> true },
@@ -254,7 +255,7 @@ class CascadeValidationConstraintSpec extends Specification {
 
     void "constraint cannot handle constraintParameter other than boolean"() {
         when:
-        constraint = new CascadeConstraint(
+        constraint = new CascadedConstraint(
                 ValidateableParent,
                 'property',
                 ['x'],

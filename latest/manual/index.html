@@ -443,7 +443,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Cascade Validation Plugin</h1>
 <div class="details">
-<span id="revnumber">version 7.0.0-RC2</span>
+<span id="revnumber">version 7.0.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -462,12 +462,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 Instead of manually calling validate() on every association, the plugin supplies a constraint (see usage) that marks an association to be validated automatically.</p>
 </div>
 <div class="sect3">
-<h4 id="breaking-change">1.1. Breaking change.</h4>
+<h4 id="breaking-changes">1.1. Breaking changes.</h4>
 <div class="paragraph">
 <p>Due to a change in Hibernate, there is a name clash with the <code>cascade</code> constraint keyword.
 For this reason <code>cascade</code> was renamed to  <code>cascaded</code>.
 Please update all your domain and command classes accordingly.
 Search for <code>cascade: true</code> (or <code>cascade: false</code>) and replace with <code>cascaded: true</code> (or <code>false</code>).</p>
+</div>
+<div class="paragraph">
+<p>The constraint class was renamed from <code>CascadeConstraint</code> to <code>CascadedConstraint</code> and the registration class from <code>CascadeConstraintRegistration</code> to <code>CascadedConstraintRegistration</code></p>
+</div>
+<div class="paragraph">
+<p>The previous format for the <code>field</code> name on collections was <code>field.0.childProperty</code>, but since
+Grails 7 does cascade validations on Domain objects, and the format for errors in this validation is <code>field[0].childProperty</code> a configuration property was added, to control if the legacy format should be used, or if the new format is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">constraints:
+    cascaded:
+        legacy: true # default to false</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -481,7 +495,7 @@ Add the dependency to your Build configuration.</p>
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="groovy">dependencies {
-    implementation "org.gpc:grails-cascade-validation:7.0.0-RC2"
+    implementation "org.gpc:grails-cascade-validation:7.0.0"
 }</code></pre>
 </div>
 </div>
@@ -649,7 +663,7 @@ class PersonDataServiceSpec extends Specification {
 <div class="sect3">
 <h4 id="databinding-usage">3.4. Databinding usage</h4>
 <div class="paragraph">
-<p>When binding data to  <code>grails.validation.Validateable</code> objects (e.g., via controllers or REST endpoints), call <code>validate()</code> or rely on automatic validation in data-binding flows, the <code>CascadeConstraint</code> ensures marked associations are validated as part of the root object validation.</p>
+<p>When binding data to  <code>grails.validation.Validateable</code> objects (e.g., via controllers or REST endpoints), call <code>validate()</code> or rely on automatic validation in data-binding flows, the <code>CascadedConstraint</code> ensures marked associations are validated as part of the root object validation.</p>
 </div>
 <div class="paragraph">
 <p>This can be illustrated with two examples:</p>
@@ -726,7 +740,7 @@ To do so add</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="groovy">        CascadeConstraintRegistration.register(applicationContext)</code></pre>
+<pre class="prettyprint highlight"><code data-lang="groovy">        CascadedConstraintRegistration.register(applicationContext)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -741,8 +755,8 @@ To do so add</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 7.0.0-RC2<br>
-Last updated 2025-10-20 09:51:33 UTC
+Version 7.0.0<br>
+Last updated 2025-10-30 13:34:46 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>

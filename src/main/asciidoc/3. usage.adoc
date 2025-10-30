@@ -67,7 +67,7 @@ include::{example}/src/integration-test/groovy/cascade/PersonDataServiceSpec.gro
 
 == Databinding usage
 
-When binding data to  `grails.validation.Validateable` objects (e.g., via controllers or REST endpoints), call `validate()` or rely on automatic validation in data-binding flows, the `CascadeConstraint` ensures marked associations are validated as part of the root object validation.
+When binding data to  `grails.validation.Validateable` objects (e.g., via controllers or REST endpoints), call `validate()` or rely on automatic validation in data-binding flows, the `CascadedConstraint` ensures marked associations are validated as part of the root object validation.
 
 This can be illustrated with two examples:
 

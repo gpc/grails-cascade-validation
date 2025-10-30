@@ -1,6 +1,6 @@
 package grails.cascade.validation.internal
 
-
+import grails.util.Holders
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.datastore.gorm.validation.constraints.AbstractConstraint
@@ -20,12 +20,12 @@ import org.springframework.validation.FieldError
  * @author Russell Morrisey
  */
 @CompileStatic
-class CascadeConstraint extends AbstractConstraint {
+class CascadedConstraint extends AbstractConstraint {
 
     static final String CASCADE_CONSTRAINT = "cascaded"
     private final Closure<Boolean> enabledEvaluator
 
-    CascadeConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    CascadedConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
         this.enabledEvaluator = constraintParameter instanceof Closure ? (constraintParameter as Closure<Boolean>) : { (constraintParameter as boolean) }
         if(this.enabledEvaluator.maximumNumberOfParameters > 2) {
@@ -90,7 +90,7 @@ class CascadeConstraint extends AbstractConstraint {
             String field
 
             if (index != null) {
-                field = "${propertyName}.${index}.${childFieldError.field}"
+                field = useLegacyNaming ? "${propertyName}.${index}.${childFieldError.field}" : "${propertyName}[${index}].${childFieldError.field}"
             } else {
                 field = "${propertyName}.${childFieldError.field}"
             }
@@ -98,6 +98,10 @@ class CascadeConstraint extends AbstractConstraint {
             FieldError fieldError = new FieldError(objectName, field, childFieldError.rejectedValue, childFieldError.bindingFailure, childFieldError.codes, childFieldError.arguments, childFieldError.defaultMessage)
             errors.addError(fieldError)
         }
+    }
+    
+    private static boolean getUseLegacyNaming() {
+        Holders.config?.getProperty('constraints.cascaded.legacy', Boolean, Boolean.FALSE)
     }
 
     private boolean isEnabled(Object target, Object propertyValue) {

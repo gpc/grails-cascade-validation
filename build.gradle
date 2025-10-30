@@ -66,3 +66,4 @@ tasks.withType(Test).configureEach {
 }
 
 apply from: layout.projectDirectory.file('gradle/docs-config.gradle')
+apply from: layout.projectDirectory.file('gradle/post-publish.gradle')

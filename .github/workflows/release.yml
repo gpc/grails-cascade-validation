@@ -132,10 +132,18 @@ jobs:
         uses: apache/grails-github-actions/post-release@asf
   notify-slack:
     name: Notify Slack
-    needs: [ publish, release ] # adjust depending on your job names
+    needs: [ publish, release ] 
     if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare release body
+        id: body
+        run: |
+          if [ -n "${{ github.event.release.body }}" ]; then
+            echo "body=${{ github.event.release.body }}" >> $GITHUB_OUTPUT
+          else
+            echo "body=No release notes provided." >> $GITHUB_OUTPUT
+          fi
       - name: Send Slack message
         uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -147,7 +155,9 @@ jobs:
                   "color": "#36a64f",
                   "title": "${{ github.event.release.name }}",
                   "title_link": "${{ github.event.release.html_url }}",
-                  "text": "${{ github.event.release.body }}"
+                  "text": ${{ 
+                    toJson(steps.body.outputs.body) 
+                  }}
                 }
               ]
             }

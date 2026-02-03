@@ -59,9 +59,11 @@ jobs:
           MAVEN_PUBLISH_URL: ${{ secrets.MAVEN_PUBLISH_SNAPSHOT_URL }}
         run: ./gradlew publish
       - name: "📖 Generate Snapshot Documentation"
+        if: ${{ hashFiles('src/main/asciidoc/**') != '' }}
         run: ./gradlew docs
       - name: "📤 Publish Snapshot Documentation to Github Pages"
         uses: apache/grails-github-actions/deploy-github-pages@asf
+        if: ${{ hashFiles('src/main/asciidoc/**') != '' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GRADLE_PUBLISH_RELEASE: 'false'

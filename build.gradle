@@ -3,10 +3,10 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 version = projectVersion
-group "io.github.gpc"
+group = "io.github.gpc"
 
 apply plugin: 'java-library'
-apply plugin: "org.apache.grails.gradle.grails-plugin"
+apply plugin: 'org.apache.grails.gradle.grails-plugin'
 apply plugin: 'org.apache.grails.gradle.grails-publish'
 
 ext {
@@ -37,7 +37,7 @@ dependencies {
     testImplementation platform("org.apache.grails:grails-bom:$grailsVersion")
     testImplementation 'org.apache.grails:grails-testing-support-web'
     testImplementation 'org.apache.grails:grails-testing-support-datamapping'
-    testRuntimeOnly "net.bytebuddy:byte-buddy:1.14.15"
+    testRuntimeOnly "net.bytebuddy:byte-buddy:$byteBuddy"
 }
 
 java {

@@ -1,6 +1,7 @@
-[![Build](https://github.com/gpc/grails-cascade-validation/actions/workflows/build.yml/badge.svg)](https://github.com/gpc/grails-cascade-validation/actions/workflows/build.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.gpc/cascade-validation)](https://central.sonatype.com/artifact/io.github.gpc/grails-export)
+[![CI](https://github.com/gpc/grails-cascade-validation/actions/workflows/gradle.yml/badge.svg?event=push)](https://github.com/gpc/grails-cascade-validation/actions/workflows/gradle.yml)
 
-grails-cascade-validation
+Grails Cascade Validation
 =========================
 
 This plugin establishes a `cascade` constraint property for validateable objects, that being domain objects, and objects implementing `grails.validation.Validateable`. If `cascade:true` is set on a nested object, the nested object's `validate()`  method will be invoked and the results will be reported as part of the parent object's validation.
@@ -15,7 +16,7 @@ To use this plugin, add the plugin to `build.gradle`:
 
 ```groovy 
 dependencies {
-     implementation "io.github.gpc:cascade-validation:7.0.0"
+     implementation "io.github.gpc:cascade-validation:7.0.1"
 }
 ```
 

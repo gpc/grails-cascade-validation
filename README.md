@@ -4,7 +4,7 @@
 Grails Cascade Validation
 =========================
 
-This plugin establishes a `cascade` constraint property for validateable objects, that being domain objects, and objects implementing `grails.validation.Validateable`. If `cascade:true` is set on a nested object, the nested object's `validate()`  method will be invoked and the results will be reported as part of the parent object's validation.
+This plugin establishes a `cascade` constraint property for validatable objects, that being domain objects, and objects implementing `grails.validation.Validateable`. If `cascade:true` is set on a nested object, the nested object's `validate()`  method will be invoked and the results will be reported as part of the parent object's validation.
 
 This plugin is for Grails 7.0.0
 

@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.gpc/cascade-validation)](https://central.sonatype.com/artifact/io.github.gpc/grails-export)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.gpc/cascade-validation)](https://central.sonatype.com/artifact/io.github.gpc/cascade-validation)
 [![CI](https://github.com/gpc/grails-cascade-validation/actions/workflows/gradle.yml/badge.svg?event=push)](https://github.com/gpc/grails-cascade-validation/actions/workflows/gradle.yml)
 
 Grails Cascade Validation

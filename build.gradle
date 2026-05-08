@@ -54,6 +54,7 @@ grailsPublish {
     developers = [
             rmorrise      : "Russell Morrisey",
             sbglasius     : "Søren Berg Glasius",
+            dauer         : "Thomas Rasmussen",
             asoftwareguy  : "Eric Kelm",
             virtualdogbert: "Tucker Pelletier",
             burtbeckwith  : "Burt Beckwith",

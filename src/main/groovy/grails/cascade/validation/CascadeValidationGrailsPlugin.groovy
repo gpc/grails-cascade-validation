@@ -29,6 +29,7 @@ Used with permission.
     def developers = [
             [name: 'Russell Morrisey', github: 'https://github.com/rmorrise'],
             [name: 'Søren Berg Glasius', email: 'soeren@glasius.dk', github: 'https://github.com/sbglasius'],
+            [name: 'Thomas Dauer Rasmussen', github: 'https://github.com/dauer'],
             [name: 'Eric Kelm', github: 'https://github.com/asoftwareguy'],
             [name: 'Burt Beckwith', github: 'https://github.com/burtbeckwith'],
             [name: 'Christian Oestreich', github: 'https://github.com/ctoestreich'],

@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![CI](https://github.com/gpc/grails-cascade-validation/actions/workflows/ci.yml/badge.svg)](https://github.com/gpc/grails-cascade-validation/actions/workflows/ci.yml)
 
-This plugin establishes a `cascaded` constraint property for validateable objects — domain classes and
+This plugin establishes a `cascaded` constraint property for validatable objects — domain classes and
 classes implementing `grails.validation.Validateable`. When `cascaded: true` is set on a nested object,
 the nested object's `validate()` method is invoked and its errors are reported as part of the parent
 object's validation.

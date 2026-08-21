@@ -2,7 +2,10 @@
 project:
   name: "cascade-validation"
   title: "Grails Cascade Validation Plugin"
-  description: "Establishes a 'cascaded' constraint property for validateable objects. If \"cascaded: true\" is set on a nested object, the nested object's validate() method will be invoked and the results will be reported as part of the parent object's validation."
+  description: "Establishes a 'cascaded' constraint property for validateable objects.\
+    \ If \"cascaded: true\" is set on a nested object, the nested object's validate()\
+    \ method will be invoked and the results will be reported as part of the parent\
+    \ object's validation."
   org: "Grails Plugins Collective"
 github:
   org: "gpc"
@@ -10,9 +13,9 @@ github:
 license:
   name: "Apache-2.0"
 contributors:
-  rmorrise: "Russell Morrisey"
   sbglasius: "Søren Berg Glasius"
-  dauer: "Thomas Dauer Rasmussen"
+  rmorrise: "Russell Morrisey"
+  dauer: "Thomas Rasmussen"
   asoftwareguy: "Eric Kelm"
   virtualdogbert: "Tucker Pelletier"
   burtbeckwith: "Burt Beckwith"

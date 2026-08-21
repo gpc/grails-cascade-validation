@@ -11,12 +11,12 @@ class CascadeValidationGrailsPlugin extends Plugin {
     def author = 'Russell Morris'
     def authorEmail = 'rmorrise@cscinfo.com'
     def description = '''\
-Establishes a 'cascaded' constraint property for validateable objects. If "cascaded: true" is set
+Establishes a 'cascaded' constraint property for validatable objects. If "cascaded: true" is set
  on a nested object, the nested object's validate() method will be invoked and the results will
  be reported as part of the parent object's validation.
 
 Based on a blog post by Eric Kelm:
- http://asoftwareguy.com/2013/07/01/grails-cascade-validation-for-pogos/
+ https://asoftwareguy.com/2013/07/01/grails-cascade-validation-for-pogos/
 Used with permission.
 '''
     def documentation = 'https://gpc.github.io/grails-cascade-validation/latest/'
@@ -28,6 +28,7 @@ Used with permission.
     def developers = [
             [name: 'Russell Morrisey', github: 'https://github.com/rmorrise'],
             [name: 'Søren Berg Glasius', email: 'soeren@glasius.dk', github: 'https://github.com/sbglasius'],
+            [name: 'Thomas Dauer Rasmussen', github: 'https://github.com/dauer'],
             [name: 'Eric Kelm', github: 'https://github.com/asoftwareguy'],
             [name: 'Burt Beckwith', github: 'https://github.com/burtbeckwith'],
             [name: 'Christian Oestreich', github: 'https://github.com/ctoestreich'],

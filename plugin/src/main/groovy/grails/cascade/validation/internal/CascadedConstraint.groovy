@@ -22,14 +22,14 @@ import org.springframework.validation.FieldError
 @CompileStatic
 class CascadedConstraint extends AbstractConstraint {
 
-    static final String CASCADE_CONSTRAINT = "cascaded"
+    static final String CASCADE_CONSTRAINT = 'cascaded'
     private final Closure<Boolean> enabledEvaluator
 
     CascadedConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
         this.enabledEvaluator = constraintParameter instanceof Closure ? (constraintParameter as Closure<Boolean>) : { (constraintParameter as boolean) }
-        if(this.enabledEvaluator.maximumNumberOfParameters > 2) {
-            throw new IllegalArgumentException("Too many arguments on closure, expects one or two")
+        if (this.enabledEvaluator.maximumNumberOfParameters > 2) {
+            throw new IllegalArgumentException('Too many arguments on closure, expects one or two')
         }
     }
 
@@ -62,7 +62,6 @@ class CascadedConstraint extends AbstractConstraint {
             validateValue(target, propertyValue, errors)
         }
     }
-
 
     /**
      * Processes the validation of the propertyValue, against the checks patterns set, and setting and calling rejectValue
@@ -105,10 +104,10 @@ class CascadedConstraint extends AbstractConstraint {
     }
 
     private boolean isEnabled(Object target, Object propertyValue) {
-        switch(enabledEvaluator.maximumNumberOfParameters) {
+        switch (enabledEvaluator.maximumNumberOfParameters) {
             case 1: return enabledEvaluator.call(propertyValue)
             case 2: return enabledEvaluator.call(propertyValue, target)
-            default: throw new IllegalArgumentException("Too many arguments on closure, expects one or two")
+            default: throw new IllegalArgumentException('Too many arguments on closure, expects one or two')
         }
     }
 

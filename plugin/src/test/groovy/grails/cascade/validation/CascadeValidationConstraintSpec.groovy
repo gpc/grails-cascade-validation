@@ -47,7 +47,7 @@ class CascadeValidationConstraintSpec extends Specification implements GrailsUni
                 null
         )
 
-        def target = "Some value"
+        def target = 'Some value'
 
         when:
         constraint.validate(parent, target, errors)
@@ -107,7 +107,7 @@ class CascadeValidationConstraintSpec extends Specification implements GrailsUni
         1 * errors.objectName >> parentName
         1 * errors.addError({
             it.objectName == parentName &&
-                    it.field == "property." + field &&
+                    it.field == 'property.' + field &&
                     it.bindingFailure == true &&
                     it.codes == codes &&
                     it.arguments == args &&

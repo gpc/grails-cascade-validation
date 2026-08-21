@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext
 
 @Slf4j
 class CascadedConstraintRegistration {
+
     static void register(ApplicationContext applicationContext) {
         
         registerCascadeConstraintOnBeans(applicationContext, ConstraintsEvaluator, DefaultConstraintEvaluator) {

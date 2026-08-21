@@ -1,69 +1,7 @@
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
-
-version = projectVersion
-group "io.github.gpc"
-
-apply plugin: 'java-library'
-apply plugin: "org.apache.grails.gradle.grails-plugin"
-apply plugin: 'org.apache.grails.gradle.grails-publish'
-
-ext {
-    buildInstant = java.util.Optional.ofNullable(System.getenv("SOURCE_DATE_EPOCH"))
-            .filter(s -> !s.isEmpty())
-            .map(Long::parseLong)
-            .map(Instant::ofEpochSecond)
-            .orElseGet(Instant::now)
-    formattedBuildDate = DateTimeFormatter.ISO_INSTANT.format(buildInstant)
-    buildDate = (buildInstant as Instant).atZone(ZoneOffset.UTC) // for reproducible builds
+plugins {
+    id 'idea'
+    id 'config.docs'
+    id 'config.publish-root'
 }
 
-repositories {
-    mavenCentral()
-    maven { url = 'https://repo.grails.org/grails/restricted' }
-    maven {
-        url = 'https://repository.apache.org/content/groups/snapshots'
-        content {
-            includeVersionByRegex('org[.]apache[.](grails|groovy).*', '.*', '.*-SNAPSHOT')
-        }
-    }
-}
-
-dependencies {
-    compileOnly platform("org.apache.grails:grails-bom:$grailsVersion")
-    compileOnly 'org.apache.grails:grails-dependencies-starter-web'
-
-    testImplementation platform("org.apache.grails:grails-bom:$grailsVersion")
-    testImplementation 'org.apache.grails:grails-testing-support-web'
-    testImplementation 'org.apache.grails:grails-testing-support-datamapping'
-    testRuntimeOnly "net.bytebuddy:byte-buddy:1.14.15"
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
-
-grailsPublish {
-    githubSlug = 'gpc/grails-cascade-validation'
-    license {
-        name = 'Apache-2.0'
-    }
-    title = 'Grails Cascade Validation Plugin'
-    desc = "This plugin establishes a 'cascade' constraint property for validateable objects. If \"cascade:true\" is set on a nested object, the nested object's validate() method will be invoked and the results will be reported as part of the parent object's validation."
-    developers = [
-            rmorrise      : "Russell Morrisey",
-            sbglasius     : "Søren Berg Glasius",
-            asoftwareguy  : "Eric Kelm",
-            virtualdogbert: "Tucker Pelletier",
-            burtbeckwith  : "Burt Beckwith",
-            ctoestreich   : "Christian Oestreich",
-    ]
-}
-
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-}
-
-apply from: layout.projectDirectory.file('gradle/docs-config.gradle')
-apply from: layout.projectDirectory.file('gradle/post-publish.gradle')
+// Intentionally left blank - use composition instead

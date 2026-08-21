@@ -1,18 +1,45 @@
-/.settings
-/.idea
-/.gradle
-/target
-/classes
-/build
-/out
-/web-app/WEB-INF
-grails-cascade-validation-*.zip
-grails-cascade-validation-*.zip.sha1
-plugin.xml
-*.ipr
+### Gradle ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+!**/src/integration-test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+!**/src/integration-test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
 *.iws
 *.iml
-*.gpg
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+!**/src/integration-test/**/out/
 
-/buildSrc/.*
-/buildSrc/build
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Other ###
+Thumbs.db
+.DS_Store
+target/

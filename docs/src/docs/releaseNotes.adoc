@@ -1,0 +1,5 @@
+[[releaseNotes]]
+== Release notes
+
+Release notes for every version are published on the
+{projectUrl}/releases[GitHub releases page].

@@ -1,0 +1,15 @@
+[[acknowledgements]]
+=== Acknowledgements
+
+This plugin was originally based on a
+http://asoftwareguy.com/2013/07/01/grails-cascade-validation-for-pogos/[blog post by Eric Kelm], and is used here with
+Eric's permission.
+
+Following are the plugin contributors:
+
+* https://github.com/rmorrise[Russell Morrisey]
+* https://github.com/sbglasius[Søren Berg Glasius]
+* https://github.com/asoftwareguy[Eric Kelm]
+* https://github.com/virtualdogbert[Tucker Pelletier]
+* https://github.com/burtbeckwith[Burt Beckwith]
+* https://github.com/ctoestreich[Christian Oestreich]

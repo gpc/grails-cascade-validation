@@ -1,13 +1,13 @@
-= Cascade Validation Plugin
-:doctype: book
-:toc: left
-:icons: font
-ifndef::revnumber[:revnumber: x.x.x]
-ifndef::src[:src: ../../../]
-ifndef::example[:example: {src}/cascade-validation-example]
+= Grails Cascade Validation Plugin
+Russell Morrisey; Søren Berg Glasius
+:examplesdir: ../../../examples/cascade-validation-example
+:plugindir: ../../../plugin
 :sectnums:
-:source-highlighter: rouge
 
-include::1. introduction.adoc[leveloffset=2]
-include::2. installation.adoc[leveloffset=2]
-include::3. usage.adoc[leveloffset=2]
+include::introduction.adoc[]
+
+include::installation.adoc[]
+
+include::usage.adoc[]
+
+include::releaseNotes.adoc[]

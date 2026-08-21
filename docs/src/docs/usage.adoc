@@ -1,9 +1,7 @@
-= Usage
+[[usage]]
+== Usage
 
-ifndef::src[:src: ../../../]
-ifndef::example[:example: {src}/cascade-validation-example]
-
-== General usage
+=== General usage
 
 The constraint can be applied in two ways, either as `cascaded: true` or as a `Closure<Boolean>`:
 
@@ -13,99 +11,93 @@ class Person {
     Address address
     List<Phone> phones
     boolean shouldValidatePhones
-    static constraints = { 
-      // Will enable cascade for the Address property
-      address cascaded: true 
-      // Will enable cascade for all phone numbers if `shouldValidatePhones` is true
-      phones cascaded: { property, target -> 
-        target.shouldValidatePhones 
-      }
+
+    static constraints = {
+        // Will enable cascade for the Address property
+        address cascaded: true
+        // Will enable cascade for all phone numbers if `shouldValidatePhones` is true
+        phones cascaded: { property, target ->
+            target.shouldValidatePhones
+        }
     }
 }
 ----
 
+=== Domain example
 
-Another example can be found in `ValidateableParent` below.
-
-== Domain example
-
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{example}/grails-app/domain/cascade/Person.groovy[tag=domain]
+include::{examplesdir}/grails-app/domain/cascade/Person.groovy[tag=domain]
 ----
 
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{example}/grails-app/domain/cascade/PhoneNumber.groovy[tag=domain]
-----
-
-[source,groovy,subs=attributes+]
-----
-include::{example}/grails-app/domain/cascade/TelephoneType.groovy[tag=domain]
+include::{examplesdir}/grails-app/domain/cascade/PhoneNumber.groovy[tag=domain]
 ----
 
-=== Explanation:
-
-- When `Person.validate()` runs, the plugin will validate the list of `PhoneNumber` instances in the phoneNumber collection when `cascaded: true` is configured for that property.
-When each `PhoneNumber` are validated, `cascaded` is also applied to `TelephoneType`
-
-== Service usage
-
-In a Data service, you can save, and validation is automatically applied
-
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{example}/grails-app/services/cascade/PersonDataService.groovy[]
+include::{examplesdir}/grails-app/domain/cascade/TelephoneType.groovy[tag=domain]
+----
+
+When `Person.validate()` runs, the plugin validates every `PhoneNumber` instance in the `phoneNumbers` collection,
+because `cascaded: true` is configured for that property.
+When each `PhoneNumber` is validated, `cascaded` is applied again to its `TelephoneType`.
+
+=== Service usage
+
+In a data service you can save, and validation is applied automatically:
+
+[source,groovy]
+----
+include::{examplesdir}/grails-app/services/cascade/PersonDataService.groovy[]
 ----
 
 See the test case:
 
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{example}/src/integration-test/groovy/cascade/PersonDataServiceSpec.groovy[]
-----
-
-== Databinding usage
-
-When binding data to  `grails.validation.Validateable` objects (e.g., via controllers or REST endpoints), call `validate()` or rely on automatic validation in data-binding flows, the `CascadedConstraint` ensures marked associations are validated as part of the root object validation.
-
-This can be illustrated with two examples:
-
-=== A one-to-one relationship
-
-[source,groovy,subs=attributes+]
-----
-include::{src}/src/test/groovy/grails/cascade/validation/support/ValidateableParent.groovy[tag=code]
+include::{examplesdir}/src/integration-test/groovy/cascade/PersonDataServiceSpec.groovy[]
 ----
 
-[source,groovy,subs=attributes+]
-----
-include::{src}/src/test/groovy/grails/cascade/validation/support/ValidateableProperty.groovy[tag=code]
-----
+=== Data binding usage
 
-=== A one-to-many relationship
+When binding data to `grails.validation.Validateable` objects (for example via controllers or REST endpoints), calling
+`validate()` — or relying on automatic validation in data-binding flows — makes the `CascadedConstraint` validate the
+marked associations as part of the root object's validation.
 
-[source,groovy,subs=attributes+]
-----
-include::{src}/src/test/groovy/grails/cascade/validation/support/ValidateableParentWithChildList.groovy[tag=code]
-----
+==== A one-to-one relationship
 
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{src}/src/test/groovy/grails/cascade/validation/support/ValidateableProperty.groovy[tag=code]
+include::{plugindir}/src/test/groovy/grails/cascade/validation/support/ValidateableParent.groovy[tag=code]
 ----
 
-=== Note on unit-test
-
-To unit-test your cascade associations, it is important to initialize the `CascadingConstraints` first.
-To do so add
-
-[source,groovy,subs=attributes+]
+[source,groovy]
 ----
-include::{example}/src/test/groovy/cascade/PersonCascadeSpec.groovy[tag=initialize]
+include::{plugindir}/src/test/groovy/grails/cascade/validation/support/ValidateableProperty.groovy[tag=code]
 ----
 
-to your `void setup() {}` block.
+==== A one-to-many relationship
 
-See `cascade-validation-example/src/test/groovy/cascade/PersonCascadeSpec.groovy` for more examples.
+[source,groovy]
+----
+include::{plugindir}/src/test/groovy/grails/cascade/validation/support/ValidateableParentWithChildList.groovy[tag=code]
+----
 
+[source,groovy]
+----
+include::{plugindir}/src/test/groovy/grails/cascade/validation/support/ValidateableProperty.groovy[tag=code]
+----
+
+=== Unit testing
+
+To unit-test your cascaded associations it is important to register the cascaded constraint first.
+Add the following to your `void setup() {}` block:
+
+[source,groovy]
+----
+include::{examplesdir}/src/test/groovy/cascade/PersonCascadeSpec.groovy[tag=initialize]
+----
+
+See `examples/cascade-validation-example/src/test/groovy/cascade/PersonCascadeSpec.groovy` for more examples.

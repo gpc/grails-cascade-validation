@@ -1,0 +1,23 @@
+[[installation]]
+== Installation
+
+The plugin is published to Maven Central.
+Add the dependency to your build configuration:
+
+[source,groovy,subs=attributes+]
+.build.gradle
+----
+dependencies {
+    implementation 'io.github.gpc:cascade-validation:{version}'
+}
+----
+
+=== Compatibility
+
+|===
+| Plugin version | Grails version | Java version
+
+| 8.0.x | Grails 8 (built against {grailsVersion}) | 21+
+| 7.0.x | Grails 7                                 | 17+
+| 4.0.x | Grails 5 and 6                            | 11+
+|===

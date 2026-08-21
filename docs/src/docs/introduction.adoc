@@ -1,0 +1,15 @@
+[[introduction]]
+== Introduction
+
+The Cascade Validation Plugin provides a small, focused extension to Grails constraints that makes it easy to validate
+associated objects (domain associations or command objects) as part of normal validation.
+Instead of manually calling `validate()` on every association, the plugin supplies a `cascaded` constraint that marks an
+association to be validated automatically.
+
+include::introduction/upgrading.adoc[]
+
+include::introduction/license.adoc[]
+
+include::introduction/acknowledgements.adoc[]
+
+include::introduction/sourceCode.adoc[]

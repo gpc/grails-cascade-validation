@@ -1,0 +1,58 @@
+plugins {
+    id 'config.example-app'
+}
+
+version = projectVersion
+group = 'cascade.validation.example'
+
+dependencies {
+    // Grails 8's Gradle plugin injects the Grails BOM as a real dependency into every
+    // declarable configuration. Gradle's JaCoCo plugin contributes its agent and ant jars
+    // through Configuration.defaultDependencies, which only take effect while the
+    // configuration has no declared dependencies -- so the injected BOM silently
+    // suppresses them and the jacocoAgent configuration resolves to nothing.
+    // Declaring them explicitly restores coverage instrumentation.
+    jacocoAgent "org.jacoco:org.jacoco.agent:$jacocoVersion"
+    jacocoAnt "org.jacoco:org.jacoco.ant:$jacocoVersion"
+
+    profile 'org.apache.grails.profiles:web'
+    console 'org.apache.grails:grails-console'
+
+    implementation project(':cascade-validation')
+
+    implementation platform("org.apache.grails:grails-bom:$grailsVersion")
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.apache.grails:grails-core'
+    implementation 'org.apache.grails:grails-web-boot'
+    implementation 'org.apache.grails:grails-logging'
+    implementation 'org.apache.grails:grails-rest-transforms'
+    implementation 'org.apache.grails:grails-databinding'
+    implementation 'org.apache.grails:grails-services'
+    implementation 'org.apache.grails:grails-url-mappings'
+    implementation 'org.apache.grails:grails-layout'
+    implementation 'org.apache.grails:grails-interceptors'
+    implementation 'org.apache.grails:grails-scaffolding'
+    implementation 'org.apache.grails:grails-data-hibernate5'
+    implementation 'org.apache.grails:grails-gsp'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    integrationTestImplementation testFixtures('org.apache.grails:grails-geb')
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.zaxxer:HikariCP'
+    runtimeOnly 'cloud.wondrify:asset-pipeline-grails'
+
+    testAndDevelopmentOnly 'org.webjars.npm:bootstrap'
+    testAndDevelopmentOnly 'org.webjars.npm:bootstrap-icons'
+    testAndDevelopmentOnly 'org.webjars.npm:jquery'
+
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'org.apache.grails:grails-testing-support-web'
+    testImplementation 'org.apache.grails:grails-testing-support-datamapping'
+}

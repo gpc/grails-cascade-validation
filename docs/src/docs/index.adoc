@@ -1,0 +1,13 @@
+= Grails Cascade Validation Plugin
+Russell Morrisey; Søren Berg Glasius
+:examplesdir: ../../../examples/cascade-validation-example
+:plugindir: ../../../plugin
+:sectnums:
+
+include::introduction.adoc[]
+
+include::installation.adoc[]
+
+include::usage.adoc[]
+
+include::releaseNotes.adoc[]

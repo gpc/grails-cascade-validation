@@ -1,0 +1,21 @@
+[[upgrading]]
+=== Upgrading from 4.0.x
+
+Due to a change in Hibernate, there is a name clash with the `cascade` constraint keyword.
+For this reason `cascade` was renamed to `cascaded`.
+Please update all your domain and command classes accordingly: search for `cascade: true` (or `cascade: false`) and
+replace it with `cascaded: true` (or `cascaded: false`).
+
+The constraint class was renamed from `CascadeConstraint` to `CascadedConstraint`, and the registration class from
+`CascadeConstraintRegistration` to `CascadedConstraintRegistration`.
+
+The previous format for the `field` name on collections was `field.0.childProperty`.
+Since Grails 7 does cascade validation on domain objects, and the format for errors in that validation is
+`field[0].childProperty`, a configuration property was added to control whether the legacy format is used:
+
+[source,yaml]
+----
+constraints:
+    cascaded:
+        legacy: true # defaults to false
+----

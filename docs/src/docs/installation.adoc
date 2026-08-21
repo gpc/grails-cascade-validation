@@ -14,5 +14,10 @@ dependencies {
 
 === Compatibility
 
-* This version requires Grails {grailsVersion} or later.
-* For Grails 5 and 6, use the 4.0.x releases.
+|===
+| Plugin version | Grails version | Java version
+
+| 8.0.x | Grails 8 (built against {grailsVersion}) | 21+
+| 7.0.x | Grails 7                                 | 17+
+| 4.0.x | Grails 5 and 6                            | 11+
+|===

@@ -7,11 +7,11 @@ objects — domain classes and classes implementing `grails.validation.Validatea
 `cascaded: true` is set on a nested object, the nested object's `validate()` method is invoked and its
 field errors are re-reported as part of the parent object's validation.
 
-- **Language:** Groovy 4.0.30 on Java 17
-- **Framework:** Grails 7.x
+- **Language:** Groovy 5.0.8 on Java 21
+- **Framework:** Grails 8.x
 - **Build System:** Gradle 8.14.4 (with wrapper)
 - **Published artifact:** `io.github.gpc:cascade-validation`
-- **Current Version:** 7.0.1-SNAPSHOT
+- **Current Version:** 8.0.0-SNAPSHOT
 - **License:** Apache 2.0
 
 ## Skill Files (Best Practices)
@@ -102,9 +102,9 @@ groovy .github/scripts/verify-repository.groovy
 
 Use SDKMAN to install the correct tool versions (see `.sdkmanrc`):
 
-- Java: `17.0.18-librca`
+- Java: `21.0.12-librca`
 - Gradle: `8.14.4`
-- Groovy: `4.0.30`
+- Groovy: `5.0.8`
 
 Run `sdk env install` to set up the environment.
 
@@ -168,3 +168,18 @@ happens when a Grails application context starts. This is documented for users i
 - **Use `def` for local variables** where the type is inferred from the right-hand side. Explicit types are for cases
   where the type cannot be inferred or `@CompileStatic` needs it. This applies to production code and tests.
 - When writing Gradle, always use the latest best practices to avoid eager initialization.
+
+## Grails 8 Notes
+
+- Grails 8's Gradle plugin injects the Grails BOM as a real dependency into every declarable configuration.
+  Gradle's JaCoCo plugin contributes its agent and ant jars through `Configuration.defaultDependencies`, which
+  only apply while a configuration has no declared dependencies — so the injected BOM silently suppresses them
+  and `jacocoAgent` resolves to nothing. `examples/cascade-validation-example/build.gradle` therefore declares
+  `jacocoAgent`/`jacocoAnt` explicitly. The plugin project is unaffected because `config.grails-plugin` turns
+  the BOM injection off.
+- The example app no longer carries a `grails.mime.types` block. Grails 8 supplies MIME defaults from the
+  framework, and a local block would *replace* rather than extend them. Use `grails.mime.mergeDefaults: true`
+  if custom MIME types are ever needed here.
+- The build still runs on Gradle 8.14.4. Gradle 9 is blocked on deprecations inside third-party plugins
+  (`org.gradle.api.plugins.Convention` in the Grails Gradle plugin, `StartParameter.isConfigurationCacheRequested`
+  in the Asciidoctor plugin), not on anything in this repository or in `build-logic/`.

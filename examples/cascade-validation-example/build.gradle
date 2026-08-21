@@ -6,6 +6,15 @@ version = projectVersion
 group = 'cascade.validation.example'
 
 dependencies {
+    // Grails 8's Gradle plugin injects the Grails BOM as a real dependency into every
+    // declarable configuration. Gradle's JaCoCo plugin contributes its agent and ant jars
+    // through Configuration.defaultDependencies, which only take effect while the
+    // configuration has no declared dependencies -- so the injected BOM silently
+    // suppresses them and the jacocoAgent configuration resolves to nothing.
+    // Declaring them explicitly restores coverage instrumentation.
+    jacocoAgent "org.jacoco:org.jacoco.agent:$jacocoVersion"
+    jacocoAnt "org.jacoco:org.jacoco.ant:$jacocoVersion"
+
     profile 'org.apache.grails.profiles:web'
     console 'org.apache.grails:grails-console'
 
@@ -35,7 +44,6 @@ dependencies {
 
     integrationTestImplementation testFixtures('org.apache.grails:grails-geb')
 
-    runtimeOnly 'org.fusesource.jansi:jansi'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.zaxxer:HikariCP'
     runtimeOnly 'cloud.wondrify:asset-pipeline-grails'

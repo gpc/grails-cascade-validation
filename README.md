@@ -17,6 +17,14 @@ dependencies {
 }
 ```
 
+## Compatibility
+
+| Plugin version | Grails version | Java version |
+|----------------|----------------|--------------|
+| 8.0.x          | Grails 8       | 21+          |
+| 7.0.x          | Grails 7       | 17+          |
+| 4.0.x          | Grails 5 / 6   | 11+          |
+
 ## Documentation
 
 The reference documentation, including the upgrade notes for the `cascade` &rarr; `cascaded` rename, is

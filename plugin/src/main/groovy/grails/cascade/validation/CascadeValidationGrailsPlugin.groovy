@@ -5,7 +5,7 @@ import grails.plugins.Plugin
 
 class CascadeValidationGrailsPlugin extends Plugin {
 
-    def grailsVersion = '7.0.0 > *'
+    def grailsVersion = '8.0.0 > *'
     def profiles = ['web']
     def title = 'Cascade Validation Plugin'
     def author = 'Russell Morris'

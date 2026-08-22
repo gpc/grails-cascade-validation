@@ -21,8 +21,10 @@ contributors:
   burtbeckwith: "Burt Beckwith"
   ctoestreich: "Christian Oestreich"
 versions:
-  current: "7.0.1"
+  current: "8.0.0-RC1"
   previous:
+  - "8.0.0-RC1"
+  - "8.0.x"
   - "7.0.1"
   - "7.0.0"
   - "7.0.0-RC2"

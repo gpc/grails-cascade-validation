@@ -7,9 +7,9 @@ objects — domain classes and classes implementing `grails.validation.Validatea
 `cascaded: true` is set on a nested object, the nested object's `validate()` method is invoked and its
 field errors are re-reported as part of the parent object's validation.
 
-- **Language:** Groovy 5.0.8 on Java 21
+- **Language:** Groovy 5.1.3 on Java 21
 - **Framework:** Grails 8.x
-- **Build System:** Gradle 8.14.4 (with wrapper)
+- **Build System:** Gradle 9.8.0 (with wrapper)
 - **Published artifact:** `io.github.gpc:cascade-validation`
 - **Current Version:** 8.0.0-SNAPSHOT
 - **License:** Apache 2.0
@@ -103,9 +103,9 @@ groovy .github/scripts/verify-repository.groovy
 Use SDKMAN to install the correct tool versions (see `.sdkmanrc`):
 
 - Java: `21.0.12-librca`
-- Gradle: `8.14.4`
-- Groovy: `5.0.8`
-
+- Gradle: `9.8.0`
+- Groovy: `5.1.3`
+- 
 Run `sdk env install` to set up the environment.
 
 ## Architecture
